@@ -76,5 +76,36 @@ This is similar to the function: m_get_myid() in the Sequent Simulator.This func
   sprintf(greeting, "Greetings from process %d of %d!", my_rank, comm_sz);
   MPI_Send(greeting, strlen(greeting)+1, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
 ```
-The build-in function: sprintf gives a string to the array(greeting).
+The build-in function: sprintf gives a string to the array(greeting).<br>
+MPI_Send(size,content(all characters), ranks(0), tag(0),MPI_COMM_WORLD(determines to which group of processes this message should be sent)<br>
+MPI_COMM_WORLD 决定信息发送给进程的哪组（这里只有一组）。Tag(0) 例如3个进程想发送字符串去打印，发送给0 参数，但是第4个进程发送字符串并让接受者显示字符串的长度而发送1参数。<br><br>
+<strong> NOTE:  In the call: MPI_Send we have: strlen(greeting) + 1</strong><br>
+"+1" is there to make a string in an array of characters by adding an extra(escape) character:'\0'. This character terminates the string.<br>
+```c
+  char x[] = {'a', 'b', 'c'};
+  printf("%d\n", strlen(x));
+
+//We may not get 3 for the length of x. But if we have:
+
+  char x[] = {'a', 'b', 'c', '\0'};
+  printf("%d\n", strlen(x));
+// we get 3 for the length if x as a string.
+```
+The additional "+1" is in the above program to include this extra character.<br>
+```c
+	 printf("From myself: Greetings process %d of %d!\n", my_rank, comm_sz);
+  for (q = 1; q < comm_sz; q++) 
+  {
+     MPI_Recv(greeting, MAX_STRING, MPI_CHAR, q, 0, MPI_COMM_WORLD,MPI_STATUS_IGNORE);
+     printf("Receiving from others: %s\n", greeting);
+  }
+```
+For example when the value of q is 1 we have:
+```c
+MPI_Recv(greeting, MAX_STRING, MPI_CHAR, 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+```
+Recving message from rank 1<br>
+Saving the message into the greeting array.<br>
+Informing the length of the string is maximum 100<br>
+
 
