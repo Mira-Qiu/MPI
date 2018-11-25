@@ -33,3 +33,13 @@ int main(void)
 
    return 0;
 }
+
+/*
+* Output:
+* 
+* From myself: Greetings process 0 of 5!
+* Receiving from others: Greetings from process 1 of 5!
+* Receiving from others: Greetings from process 2 of 5!
+* Receiving from others: Greetings from process 3 of 5!
+* Receiving from others: Greetings from process 4 of 5!
+*/ 
