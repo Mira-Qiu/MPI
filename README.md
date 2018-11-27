@@ -108,4 +108,4 @@ Recving message from rank 1<br>
 Saving the message into the greeting array.<br>
 Informing the length of the string is maximum 100<br>
 
-
+Go on...
